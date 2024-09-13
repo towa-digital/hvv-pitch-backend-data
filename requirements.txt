@@ -12,5 +12,6 @@ qrcode
 sqlalchemy
 
 # Testing
+requests
 pytest
 httpx

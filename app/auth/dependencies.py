@@ -10,6 +10,7 @@ from .crud import get_user_by_username
 from .schemas import TokenData
 from settings.config import SECRET_KEY, ALGORITHM
 from settings.database import get_db
+from .models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
@@ -35,3 +36,8 @@ async def get_current_user(
     if user is None:
         raise credentials_exception
     return user
+
+
+async def get_current_user_dummy(db: Session = Depends(get_db)): 
+    return User( username="dummy_user", is_active=True)
+    
