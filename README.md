@@ -140,12 +140,12 @@ The HVV Air Pollution API can be pulled from the GitHub Container Registry and r
 
 3. **Run the container**
     ```bash
-    docker run -d ghcr.io/<your-repo/<your-containername>:latest
+    sudo docker run -d --name hvv-api -p 80:7555 ghcr.io/<your-repo/<your-containername>:latest
     ```
 
 4. **Access the API**
 
-    The api can be accessed under http://localhost/docs.
+    The api can be accessed under http://localhost/docs. If accessing the page is not possible, make sure that port 80 and 7555 are open. It might also be necessary to change the port mapping in the docker run statement.
 
 ## Deployment and Workflow Setup
 
