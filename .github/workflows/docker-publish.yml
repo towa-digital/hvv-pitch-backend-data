@@ -3,8 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - dev  # Trigger the workflow when a push is made to the dev branch
-      - feature/testing/VG  # Trigger the workflow when a push is made to a feature branch
+      - dev  
 
 jobs:
   test:
@@ -40,23 +39,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Log in to GitHub Container Registry (GHCR)
     - name: Log in to GitHub Container Registry
       run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Build the Docker image using Docker Compose
-      run: docker compose -f compose.yaml build api  # Adjust 'app' to match your service name in docker-compose.yaml
+      run: docker compose -f compose.yaml build api  
 
     - name: Tag the Docker image
       run: docker tag docker.io/library/hvv-pitch-backend-data-api ghcr.io/${{ github.repository }}/fastapi-hvv:latest
 
     - name: Push the Docker image to GitHub Container Registry
       run: docker push ghcr.io/${{ github.repository }}/fastapi-hvv:latest
-
-    # # Build the Docker images using docker compose
-    # - name: Build Docker Compose services
-    #   run: docker compose -f compose.yaml build
-
-    # # Push the Docker images to GitHub Container Registry
-    # - name: Push Docker images to GitHub Container Registry
-    #   run: docker push ghcr.io/${{ github.repository }}/fastapi-hvv:latest
