@@ -7,6 +7,9 @@ This FastAPI application provides authentication and pollution data retrieval se
   - [Authentication](#authentication)
   - [Pollution Data](#pollution-data)
 - [Security](#security)
+- [Testing](#testing)
+- [Installation](#installation)
+- [Deployment and Workflow Setup](#deployment-and-workflow-setup)
 
 ---
 
@@ -17,7 +20,7 @@ This FastAPI application provides authentication and pollution data retrieval se
 1. **POST `/auth/token`**
    - **Description**: This endpoint allows users to log in by providing a username and password. On successful login, it returns a JWT token that must be used to authenticate subsequent requests.
    - **Request Body**:
-     - `grant_type`: password
+     - `grant_type`: **password**
      - `username`: string
      - `password`: string
    - **Response**: JWT token for authenticating further requests.
@@ -85,6 +88,24 @@ This application implements several layers of security to protect user data and 
 
 ---
 
+## Testing
+
+This application includes automated tests using FastAPI's `TestClient`. Below are the tests that are performed:
+
+### Testing Response Status
+
+Tests verify that fastAPI runs as expected and a 200 response is returned.
+
+### Testing Response Content
+
+Tests check if the response content includes the expected data, verifying the data for selected countries.
+
+### Testing Response Errors
+
+Tests ensure proper error handling by verifying that the correct error messages and status codes are returned when invalid data are supplied.
+
+---
+
 ## Installation
 
 ### From GitHub Container Registry
@@ -92,17 +113,73 @@ This application implements several layers of security to protect user data and 
 The HVV Air Pollution API can be pulled from the GitHub Container Registry and run using Docker. Follow the steps below:
 
 1. **Authenticate Docker with the GitHub Container Registry**
+
    ```bash
-   echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+   docker login ghcr.io
+   ```
+   Use your Github-Username and a personal access token. The personal access token needs the following scopes:
+   - repos
+   - workflows
+   - write_packages
 
 2. **Pull the image from GitHub Container Registry**
     ```bash
-    docker pull ghcr.io/your-repo/fastapi-auth-pollution:latest
+    docker pull ghcr.io/<your-repo/<your-containername>:latest
+    ```
 
 3. **Run the container**
     ```bash
-    docker run -d ghcr.io/your-repo/fastapi-auth-pollution:latest
+    docker run -d ghcr.io/<your-repo/<your-containername>:latest
+    ```
 
 4. **Access the API**
+
+    The api can be accessed under http://localhost/docs.
+
+## Deployment and Workflow Setup
+
+This section outlines the steps to unzip a GitHub repository, create a new GitHub repository, clone it, run the Docker container, and push changes to trigger a GitHub Actions workflow.
+
+### Create the GitHub Repository from zipped files
+
+1. On Linux/Unix, use the following command to unzip the files:
     ```bash
-    http://localhost/docs
+    unzip <repository-name>.zip
+    cd <repository-name>
+    ```
+
+    On Windows, just unzip the files in the explorer.
+
+2. Create a new GitHub Repository
+
+    Create a new repository on github.com. In preparation for adding the workflow to build the docker container, add a Personal Access Token (PAT) as Secret under `Settings -> Secrets and Variables -> Actions` named **GHCR_TOKEN**.
+    The **GHCR_TOKEN** needs to have the following scopes:
+    - repos
+    - workflows
+    - write_packages
+
+3. Create the local repository
+
+    Create the local repository and push your code to the dev-branch using the following code: 
+    ```bash
+    git init
+    git add .
+    git commit -m "Initial commit"
+
+    git remote add origin https://github.com/<username>/<repository-name>.git
+    git push -u origin dev
+    ```
+    ### Build and run the docker container
+
+    To build and run the docker container using the dockerfile and compose.yaml within the repository, follow these steps:
+
+    1. Build the docker image
+
+    ```bash
+    docker compose build [--no-cache]
+    ```
+
+    2. Start the docker image
+    ```bash
+    docker compose up [-d]
+    ```
