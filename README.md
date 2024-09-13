@@ -117,10 +117,14 @@ The HVV Air Pollution API can be pulled from the GitHub Container Registry and r
    ```bash
    docker login ghcr.io
    ```
-   Use your Github-Username and a personal access token. The personal access token needs the following scopes:
+   Use your Github-Username and a personal access token (PAT). The access token needs the following scopes:
    - repos
    - workflows
    - write_packages
+
+   An access token can be created by navigating to the User Settings:
+   
+   `Settings` &rarr; `Developer settings` &rarr; `Personal Access Tokens` &rarr; `Tokens (classic)`
 
 2. **Pull the image from GitHub Container Registry**
     ```bash
@@ -152,7 +156,7 @@ This section outlines the steps to unzip a GitHub repository, create a new GitHu
 
 2. Create a new GitHub Repository
 
-    Create a new repository on github.com. In preparation for adding the workflow to build the docker container, add a Personal Access Token (PAT) as Secret under `Settings -> Secrets and Variables -> Actions` named **GHCR_TOKEN**.
+    Create a new repository on github.com. In preparation for adding the workflow to build the docker container, add a Personal Access Token (PAT) as Secret under `Settings` &rarr; `Secrets and Variables` &rarr; `Actions` named **GHCR_TOKEN**.
     The **GHCR_TOKEN** needs to have the following scopes:
     - repos
     - workflows
