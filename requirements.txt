@@ -1,0 +1,16 @@
+# FastAPI:
+fastapi[standard]
+uvicorn
+
+# Authentication:
+pyjwt
+passlib[bcrypt]
+pyotp
+qrcode
+
+# Database:
+sqlalchemy
+
+# Testing
+pytest
+httpx
