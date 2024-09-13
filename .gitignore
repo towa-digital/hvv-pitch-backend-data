@@ -1,0 +1,5 @@
+# .env
+bin/
+**/__pycache__/
+air_pollution_aggregated.csv
+air_pollution.csv
