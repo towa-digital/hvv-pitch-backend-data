@@ -17,6 +17,7 @@ This FastAPI application provides authentication and pollution data retrieval se
 1. **POST `/auth/token`**
    - **Description**: This endpoint allows users to log in by providing a username and password. On successful login, it returns a JWT token that must be used to authenticate subsequent requests.
    - **Request Body**:
+     - `grant_type`: password
      - `username`: string
      - `password`: string
    - **Response**: JWT token for authenticating further requests.
@@ -53,7 +54,7 @@ This FastAPI application provides authentication and pollution data retrieval se
    - **Description**: Fetches pollution data for a specific country and year. The user must be authenticated to access this endpoint.
    - **Query Parameters**:
      - `country`: string (Country name)
-     - `year`: integer (Year of the pollution data)
+     - `year`: integer (Year)
    - **Response**: JSON data containing pollution metrics for the specified country and year.
    - **Authentication Required**: Yes (JWT Token)
 
@@ -64,26 +65,44 @@ This FastAPI application provides authentication and pollution data retrieval se
 This application implements several layers of security to protect user data and ensure secure access to the endpoints:
 
 1. **JWT Authentication**: 
-   - All endpoints (except `/auth/register` and `/auth/token`) require the user to be authenticated using a valid JWT token. This token is generated upon successful login and must be included in the `Authorization` header of subsequent requests in the format `Bearer <token>`.
+   - All endpoints (except `/auth/register` and `/auth/token`) require the user to be authenticated using a valid JWT token. This token is generated upon successful submission of the /auth/token-request and must be included in the `Authorization` header of subsequent requests in the format `Bearer <token>`.
+   
+   Within FastAPI this token can also be generated using the OAuth-UI.
+
+   ![alt text](image.png)
 
 2. **Password Protection**:
    - User passwords are securely hashed and stored to prevent unauthorized access. Plaintext passwords are never stored or transmitted.
 
 3. **Two-Factor Authentication (2FA)**:
-   - For additional security, users can enable two-factor authentication (2FA). Once enabled, users will be required to provide a 2FA code (from an authenticator app) in addition to their username and password during login.
+   - For additional security, users can enable two-factor authentication (2FA). Once enabled, users will be required to provide a 2FA code (from an authenticator app) in addition to their username and password during login. For the current version, this feature is disabled.
 
 4. **HTTPS**:
-   - The application should be deployed behind an HTTPS-enabled server to encrypt all communication between the client and the server, ensuring sensitive data like passwords and tokens are protected in transit.
+   - The application should be deployed behind an HTTPS-enabled server to encrypt all communication between the client and the server, ensuring sensitive data like passwords and tokens are protected in transit. For the purpose of this demo, this feature is not enabled.
 
-5. **Rate Limiting** (Optional):
-   - Implementing rate limiting can help mitigate brute-force attacks and prevent abuse of the authentication endpoints.
+5. **Client Id & Client Secret** (Optional):
+    - The application can optionally use a client_id and client_secret to authorize and authenticate API clients. This ensures only authorized applications can access the API and helps with tracking usage and applying rate limiting to mitigate brute-force attacks or prevent abuse of authentication endpoints.
 
 ---
 
-## Running the Application
+## Installation
 
-To run this FastAPI application locally, follow these steps:
+### From GitHub Container Registry
 
-1. Clone the repository:
+The HVV Air Pollution API can be pulled from the GitHub Container Registry and run using Docker. Follow the steps below:
+
+1. **Authenticate Docker with the GitHub Container Registry**
    ```bash
-   git clone https://github.com/your-repo/fastapi-auth-pollution.git
+   echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+
+2. **Pull the image from GitHub Container Registry**
+    ```bash
+    docker pull ghcr.io/your-repo/fastapi-auth-pollution:latest
+
+3. **Run the container**
+    ```bash
+    docker run -d ghcr.io/your-repo/fastapi-auth-pollution:latest
+
+4. **Access the API**
+    ```bash
+    http://localhost/docs
