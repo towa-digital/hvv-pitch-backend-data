@@ -2,6 +2,12 @@ FROM python:3.12-slim
 
 WORKDIR /code
 
+# Declare build arguments
+ARG SECRET_KEY
+
+# Optionally set them as environment variables
+ENV SECRET_KEY=${SECRET_KEY}
+
 # Install sqlite3
 RUN apt-get update && apt-get install -y sqlite3 && rm -rf /var/lib/apt/lists/*
 
