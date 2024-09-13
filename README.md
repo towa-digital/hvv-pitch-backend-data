@@ -3,13 +3,20 @@
 This FastAPI application provides authentication and pollution data retrieval services through a set of secure endpoints. Users can authenticate, manage their accounts, and fetch pollution data for different countries and years.
 
 ## Table of Contents
-- [Endpoints](#endpoints)
-  - [Authentication](#authentication)
-  - [Pollution Data](#pollution-data)
-- [Security](#security)
-- [Testing](#testing)
-- [Installation](#installation)
-- [Deployment and Workflow Setup](#deployment-and-workflow-setup)
+- [HVV Air Pollution API](#hvv-air-pollution-api)
+  - [Table of Contents](#table-of-contents)
+  - [Endpoints](#endpoints)
+    - [Authentication](#authentication)
+    - [Pollution Data](#pollution-data)
+  - [Security](#security)
+  - [Testing](#testing)
+    - [Testing Response Status](#testing-response-status)
+    - [Testing Response Content](#testing-response-content)
+    - [Testing Response Errors](#testing-response-errors)
+  - [Installation](#installation)
+    - [From GitHub Container Registry](#from-github-container-registry)
+  - [Deployment and Workflow Setup](#deployment-and-workflow-setup)
+    - [Create the GitHub Repository from zipped files](#create-the-github-repository-from-zipped-files)
 
 ---
 
