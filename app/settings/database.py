@@ -1,6 +1,11 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, declarative_base
 
+from .config import (
+    DEBUG,
+    TESTING
+)
+
 def get_sqlite_url():
     return "sqlite:////code/my_database.db"
 
