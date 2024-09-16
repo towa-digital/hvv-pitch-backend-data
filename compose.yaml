@@ -2,6 +2,8 @@ services:
   api:
     build:
       context: .
+      args:
+        SECRET_KEY: ${SECRET_KEY}  # This reads from the .env file or environment
     container_name: fastapi-hvv
     env_file:
       - .env
