@@ -17,6 +17,11 @@ This FastAPI application provides authentication and pollution data retrieval se
     - [From GitHub Container Registry](#from-github-container-registry)
   - [Deployment and Workflow Setup](#deployment-and-workflow-setup)
     - [Create the GitHub Repository from zipped files](#create-the-github-repository-from-zipped-files)
+  - [Branching Strategy](#branching-strategy)
+    - [Branch Protection Rule:](#branch-protection-rule)
+    - [Access Protection Rules:](#access-protection-rules)
+    - [Tag Protection Rules:](#tag-protection-rules)
+    - [File Path Protection:](#file-path-protection)
 
 ---
 
@@ -194,3 +199,18 @@ This section outlines the steps to unzip a GitHub repository, create a new GitHu
     ```bash
     docker compose up [-d]
     ```
+
+## Branching Strategy
+
+   ### Branch Protection Rule:
+   All commits must be made to a non-protected branch and submitted via a pull request before they can be merged into a branch that matches this rule. Pull requests targeting a matching branch require a number of two approvals and no changes requested before they can be merged. Applied to dev branch.
+
+   ### Access Protection Rules:
+   Only allow users with bypass permission to create and delete branches. Applied to main and dev branch.
+
+   ### Tag Protection Rules:
+   Only allow users with bypass permission to create and delete tags. Applied to main and dev branch.
+
+   ### File Path Protection:
+   Prevent commits that include changes in specified in main and dev branch from being pushed to the commit graph. Applied to main and dev branch.
+
