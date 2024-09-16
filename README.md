@@ -243,17 +243,15 @@ This section outlines the steps to unzip a GitHub repository, create a new GitHu
    ### Pull Requests and Code Reviews
    Goal: Ensure that the new code is error-free and consistent with the existing project code.
 
-   Process:
-
    #### Branch Protection Rule:
-   All commits must be made to a non-protected branch and submitted via a pull request before they can be merged into a branch that matches this rule. Pull requests targeting a matching branch require a number of two approvals and no changes requested before they can be merged. Applied to dev branch.
+   All commits must be made to a non-protected branch and submitted through a pull request before being merged into a protected branch. Pull requests targeting a protected branch require two approvals and no pending change requests to proceed with the merge. This rule applies to the dev branch.
 
    #### Access Protection Rules:
-   Only allow users with bypass permission to create and delete branches. Applied to main and dev branch.
+   Only users with bypass permissions are authorized to create or delete branches. This rule applies to both the main and dev branches.
 
    #### Tag Protection Rules:
-   Only allow users with bypass permission to create and delete tags. Applied to main and dev branch.
+   Only users with bypass permissions are authorized to create or delete tags. Applied to main and dev branch.
 
    #### File Path Protection:
-   Prevent commits that include changes in specified in main and dev branch from being pushed to the commit graph. Applied to main and dev branch.
+   Prevent commits that make changes to specified files in the main and dev branches from being pushed to the commit history. Applied to main and dev branch.
 
