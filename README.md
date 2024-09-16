@@ -18,10 +18,15 @@ This FastAPI application provides authentication and pollution data retrieval se
   - [Deployment and Workflow Setup](#deployment-and-workflow-setup)
     - [Create the GitHub Repository from zipped files](#create-the-github-repository-from-zipped-files)
   - [Branching Strategy](#branching-strategy)
-    - [Branch Protection Rule:](#branch-protection-rule)
-    - [Access Protection Rules:](#access-protection-rules)
-    - [Tag Protection Rules:](#tag-protection-rules)
-    - [File Path Protection:](#file-path-protection)
+    - [Main Branch: main](#main-branch-main)
+    - [Dev Branch: dev](#dev-branch-dev)
+    - [Development Branches: feature/ Prefix](#development-branches-feature-prefix)
+    - [Hotfix Branches: hotfix/ Prefix](#hotfix-branches-hotfix-prefix)
+    - [Pull Requests and Code Reviews](#pull-requests-and-code-reviews)
+      - [Branch Protection Rule:](#branch-protection-rule)
+      - [Access Protection Rules:](#access-protection-rules)
+      - [Tag Protection Rules:](#tag-protection-rules)
+      - [File Path Protection:](#file-path-protection)
 
 ---
 
@@ -202,15 +207,53 @@ This section outlines the steps to unzip a GitHub repository, create a new GitHu
 
 ## Branching Strategy
 
-   ### Branch Protection Rule:
+   ### Main Branch: main
+   Purpose: Serves as the primary line for the project, from which releases are generated.
+
+   Process:
+
+   The main branch should always be deployable and contains the most stable code.
+   All changes to the main branch must be submitted via Pull Requests (PRs), which must be reviewed by at least two other team member.
+
+   ### Dev Branch: dev
+   Purpose: Serves as the primary developement line for the project, from which the main branch is updated.
+
+   Process:
+
+   All changes to the dev branch must be submitted via Pull Requests (PRs), which must be reviewed by at least two other team member.
+
+
+   ### Development Branches: feature/ Prefix
+   Purpose: A separate branch for each new feature or client requirement.
+
+   Process:
+
+   Each new feature or client project receives its own branch, e.g., feature/new-reporting-module.
+   The branch name should clearly describe the feature or project for easy identification.
+   Once completed, the feature branch is merged into the main branch via a PR. The PR must pass code reviews and all automated tests.
+
+   ### Hotfix Branches: hotfix/ Prefix
+   Purpose: Quick fixes for critical bugs in the main branch.
+
+   Process:
+
+   Hotfixes are developed on a separate branch, e.g., hotfix/critical-database-fix.
+   Once completed, the hotfix is merged into the main branch and simultaneously into the current development branch to avoid regressions.
+
+   ### Pull Requests and Code Reviews
+   Goal: Ensure that the new code is error-free and consistent with the existing project code.
+
+   Process:
+
+   #### Branch Protection Rule:
    All commits must be made to a non-protected branch and submitted via a pull request before they can be merged into a branch that matches this rule. Pull requests targeting a matching branch require a number of two approvals and no changes requested before they can be merged. Applied to dev branch.
 
-   ### Access Protection Rules:
+   #### Access Protection Rules:
    Only allow users with bypass permission to create and delete branches. Applied to main and dev branch.
 
-   ### Tag Protection Rules:
+   #### Tag Protection Rules:
    Only allow users with bypass permission to create and delete tags. Applied to main and dev branch.
 
-   ### File Path Protection:
+   #### File Path Protection:
    Prevent commits that include changes in specified in main and dev branch from being pushed to the commit graph. Applied to main and dev branch.
 
